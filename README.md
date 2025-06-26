@@ -1,4 +1,4 @@
-# 🛠️ Teleporter DevOps Workflows
+# DevOps Workflows
 
 Centralized GitHub Actions you can reuse across all your projects.
 
@@ -61,7 +61,7 @@ You can:
 2. Or (soon): use reusable workflows like this:
 
 ```yaml
-uses: theteleporter/teleporter-devops-workflows/.github/workflows/lint.yml@main
+uses: theteleporter/workflows/.github/workflows/lint.yml@main
 
 ```
 
@@ -76,5 +76,4 @@ uses: theteleporter/teleporter-devops-workflows/.github/workflows/lint.yml@main
 
 ---
 
-Stay sharp, automate everything 🧠⚡
-Made by [@theteleporter](https://github.com/theteleporter)
+By [@theteleporter](https://github.com/theteleporter)
