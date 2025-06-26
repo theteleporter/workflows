@@ -96,4 +96,4 @@ You'll need a `GITHUB_TOKEN` with access to the source repo (via a personal acce
 
 ---
 
-By [@theteleporter](https://x.com/theteleporter)
+By [@theteleporter](https://x.com/theteleporter_)
