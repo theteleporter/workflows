@@ -10,7 +10,7 @@ Built to automate:
 
 ---
 
-## ⚙️ Core Dev Workflows
+## Core Dev Workflows
 
 | Workflow File           | Description                             |
 |------------------------|-----------------------------------------|
@@ -21,7 +21,7 @@ Built to automate:
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 | Workflow File                | Description                           |
 |-----------------------------|---------------------------------------|
@@ -30,7 +30,7 @@ Built to automate:
 
 ---
 
-## 💬 Team/Productivity
+## Team/Productivity
 
 | Workflow File       | Description                              |
 |---------------------|------------------------------------------|
@@ -42,7 +42,7 @@ Built to automate:
 
 ---
 
-## ⚡ Advanced / Extras
+## Advanced / Extras
 
 | Workflow File        | Description                             |
 |----------------------|-----------------------------------------|
@@ -54,7 +54,7 @@ Built to automate:
 
 ---
 
-## 🚀 Usage in Another Repo
+## Usage in Another Repo
 
 You can:
 1. Copy & paste from here
@@ -64,6 +64,26 @@ You can:
 uses: theteleporter/workflows/.github/workflows/lint.yml@main
 
 ```
+
+#### Example to use a reusable workflow from another repo:
+
+```yaml
+name: Lint Check
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    uses: theteleporter/workflows/.github/workflows/lint.yml@main
+```
+
+*Notes:*
+- `theteleporter/workflows`: GitHub repo
+- `.github/workflows/lint.yml`: Path to the reusable workflow
+- `@main`: Branch or tag you're referencing
+
+If private:
+You'll need a `GITHUB_TOKEN` with access to the source repo (via a personal access token or repo-level permission).
 
 ---
 ## 🧪 Coming Soon
@@ -76,4 +96,4 @@ uses: theteleporter/workflows/.github/workflows/lint.yml@main
 
 ---
 
-By [@theteleporter](https://github.com/theteleporter)
+By [@theteleporter](https://x.com/theteleporter)
