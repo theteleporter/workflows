@@ -1,0 +1,37 @@
+# ✅ Auto-link Linear issues from branch/PR titles
+# Optionally update status when PR is merged
+
+name: Linear PR Linker
+
+on:
+  pull_request:
+    types: [opened, synchronize, closed]
+
+jobs:
+  link-linear:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Link Linear Issue
+        uses: linear/github-action@v1
+        with:
+          linearApiKey: ${{ secrets.LINEAR_API_KEY }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          # 👇 Matches branch like "feature/LIN-42-new-dashboard" or title like "[LIN-42] ..."
+          branchNamePattern: "([A-Z]+-[0-9]+)"
+          # Optional: Update issue state when PR merged
+          updateIssueStateWhenMerged: true
+          mergedIssueStateName: "Done"
+
+# 🔐 Required Secret:
+
+# LINEAR_API_KEY → from Linear Developer Settings → https://linear.app/settings/api
+
+# 🧠 Usage Flow:
+
+# Branch name: feat/LIN-42-add-login
+
+# PR opened: Linear shows linked GitHub PR
+
+# PR merged: Linear task marked “Done” (or whatever you configure)
+

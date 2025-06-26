@@ -1,0 +1,12 @@
+name: Clear Temp Files
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Every day at 2am UTC
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup
+        run: rm -rf /tmp/uploads/*

@@ -1,0 +1,14 @@
+ui:
+  - 'components/**/*'
+  - 'styles/**/*'
+
+api:
+  - 'pages/api/**/*'
+  - 'lib/api/**/*'
+
+infra:
+  - '.github/workflows/**/*'
+  - 'infrastructure/**/*'
+
+# > Add labels like ui, api, infra manually to GitHub repo before using.
+

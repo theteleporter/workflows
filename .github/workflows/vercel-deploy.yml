@@ -1,0 +1,53 @@
+# ✅ Vercel Deploy Workflow
+# Deploys your site to Vercel using their CLI and token
+
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]  # 👈 Set to production branch only
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 🧾 1. Checkout code
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # 🧰 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 📦 3. Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # 🚀 4. Deploy to Vercel
+      - name: Deploy
+        run: |
+          npm install -g vercel
+          vercel --prod --confirm --token=${{ secrets.VERCEL_TOKEN }}
+
+
+# to get this workin' 
+# 1. 🔑 Add this secret to your GitHub repo:
+
+# VERCEL_TOKEN → Generate it here →https://vercel.com/account/tokens
+
+# 2. 🧩 Optional: Add vercel.json in your project root to define:
+
+
+# {
+#   "orgId": "your-org-id",
+#   "projectId": "your-project-id"
+# }
+
+# 3. ⚙️ You can also set:
+
+# --cwd path/to/project for monorepos
+
+# or trigger vercel pull if you want to sync envs from the dashboard

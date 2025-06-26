@@ -1,0 +1,35 @@
+# ✅ Preview Deploy to Vercel on PRs / feature branches
+name: Preview Deploy to Vercel
+
+on:
+  pull_request:
+    branches: ["*"]  # Trigger on all PRs
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel (Preview)
+        id: vercel_deploy
+        run: |
+          URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }} --confirm)
+          echo "preview_url=$URL" >> $GITHUB_OUTPUT
+
+      - name: Echo Preview URL
+        run: echo "Preview URL: ${{ steps.vercel_deploy.outputs.preview_url }}"
+

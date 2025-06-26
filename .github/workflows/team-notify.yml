@@ -1,0 +1,74 @@
+# ✅ Team Notifications & Preview URL Dispatcher
+# Sends preview deploy URL to Slack when a PR is opened or updated
+
+name: PR Notifier & Preview Deployer
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 🧾 Checkout the repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 🧰 Setup Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 📦 Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # 🚀 Deploy to Vercel (Preview)
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel (Preview)
+        id: vercel_preview
+        run: |
+          URL=$(vercel --token=${{ secrets.VERCEL_TOKEN }} --confirm)
+          echo "preview_url=$URL" >> $GITHUB_OUTPUT
+
+      # 📣 Post preview link to Slack
+      - name: Send to Slack
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "text": ":rocket: *New Preview Deployed!*",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*<${{ steps.vercel_preview.outputs.preview_url }}|View Preview>* for PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}"
+                  }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "Author: ${{ github.event.pull_request.user.login }} | Repo: ${{ github.repository }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+
+
+# 🔐 Required Secrets:
+
+# VERCEL_TOKEN → from Vercel tokens → https://vercel.com/account/tokens
+
+# SLACK_WEBHOOK_URL → create in Slack → Apps → Incoming Webhooks → https://api.slack.com/messaging/webhooks

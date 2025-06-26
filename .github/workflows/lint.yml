@@ -1,0 +1,44 @@
+# ✅ Lint & Format Workflow
+# This workflow runs ESLint and Prettier checks on pushes and pull requests.
+
+name: Lint & Format
+
+on:
+  push:
+    branches: [main]  # 👈 Change this to ["*"] to run on all branches
+  pull_request:
+    branches: [main]  # 👈 Or add more like [main, dev, beta] for specific branches
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest  # 🧠 The VM that runs this job
+
+    steps:
+      # 🧾 1. Checkout code
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # 🧰 2. Setup Node.js (adjust version as needed)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # ⚠️ Use the Node version your project runs on
+
+      # 📦 3. Install dependencies with clean lockfile
+      - name: Install dependencies
+        run: npm ci  # ⬅️ Faster and cleaner than `npm install`
+
+      # 🧹 4. Lint code using ESLint
+      - name: Run ESLint
+        run: npm run lint
+
+      # 🎯 5. Check formatting using Prettier
+      - name: Run Prettier check
+        run: npm run format:check
+
+
+# for it to run, add this to package.json
+# "scripts": {
+#   "lint": "next lint",
+#   "format:check": "prettier --check ."
+# }
